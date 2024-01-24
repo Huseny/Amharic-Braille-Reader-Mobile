@@ -1,45 +1,32 @@
 import 'package:amharic_braille/presentation/widget/custom_app_bar.dart';
+import 'package:amharic_braille/presentation/widget/custom_drawer.dart';
+import 'package:amharic_braille/presentation/widget/homebody.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int currentPage = 0;
+
+  void onTab(int id) {
+    setState(() {
+      currentPage = id;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(),
-      body: const Center(
-        child: Text('Amharic Braille Reader'),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Amharic Braille Reader',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              title: const Text('Home'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('About'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
+      body: const HomeBody(),
+      drawer: CustomDrawer(
+        currentPage: currentPage,
+        onPageChanged: onTab,
       ),
     );
   }

@@ -6,14 +6,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        title: const Text('Amharic Braille Reader'),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.inbox),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-        ));
+      title: const Text('Amharic Braille Reader'),
+    );
   }
 
   @override
