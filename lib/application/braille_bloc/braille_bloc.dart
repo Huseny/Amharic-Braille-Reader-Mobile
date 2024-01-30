@@ -18,5 +18,16 @@ class BrailleBloc extends Bloc<BrailleEvent, BrailleState> {
         emit(BrailleTranslationFailure(message: e.toString()));
       }
     });
+
+    on<GetRecents>((event, emit) async {
+      if (state is BrailleRecentsLoading) return;
+      emit(BrailleRecentsLoading());
+      try {
+        final recents = await _brailleRepository.getRecents();
+        emit(BrailleRecentsSuccess(recents: recents));
+      } catch (e) {
+        emit(BrailleRecentsFailure(message: e.toString()));
+      }
+    });
   }
 }

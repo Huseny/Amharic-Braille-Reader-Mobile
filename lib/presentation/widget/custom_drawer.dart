@@ -39,15 +39,13 @@ class CustomDrawer extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    height: 70,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      // TODO(Husen): Fix this later
-                      // image: DecorationImage(
-                      //   image: AssetImage('assets/images/profile.jpg'),
-                      // ),
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.white,
+                    child: Image.asset(
+                      "assets/images/logo.png",
+                      height: 100,
+                      width: 100,
                     ),
                   ),
                   const Row(
@@ -78,6 +76,7 @@ class CustomDrawer extends StatelessWidget {
                 top: 15,
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: List.generate(
                     drawerEntries.length,
                     (index) => DrawerItem(

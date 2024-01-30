@@ -9,3 +9,8 @@ class TranscribeBraille extends BrailleEvent {
   @override
   List<Object?> get props => [imagePath];
 }
+
+class GetRecents extends BrailleEvent {
+  @override
+  List<Object?> get props => [];
+}

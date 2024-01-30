@@ -27,3 +27,24 @@ class BrailleTranslationFailure extends BrailleState {
   @override
   List<Object?> get props => [message];
 }
+
+class BrailleRecentsLoading extends BrailleState {
+  @override
+  List<Object?> get props => [];
+}
+
+class BrailleRecentsSuccess extends BrailleState {
+  final List recents;
+  BrailleRecentsSuccess({required this.recents});
+
+  @override
+  List<Object?> get props => recents;
+}
+
+class BrailleRecentsFailure extends BrailleState {
+  final String message;
+  BrailleRecentsFailure({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}
