@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                     title: 'Upload Photo',
                     isIconBlend: true),
                 TabItem(
-                    icon: Icon(Icons.book_rounded),
+                    icon: Icon(Icons.leaderboard_rounded),
                     title: 'Learn Braille',
                     isIconBlend: true),
               ],

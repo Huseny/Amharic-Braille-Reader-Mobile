@@ -1,3 +1,4 @@
+import 'package:amharic_braille/application/models/translation_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class BrailleState extends Equatable {}
@@ -13,11 +14,17 @@ class BrailleTranslationLoading extends BrailleState {
 }
 
 class BrailleTranslationSuccess extends BrailleState {
-  final List<String> translation;
+  final TranslationModel translation;
   BrailleTranslationSuccess({required this.translation});
 
   @override
-  List<Object?> get props => translation;
+  List<Object?> get props => [
+        translation.id,
+        translation.image,
+        translation.braille,
+        translation.translation,
+        translation.createdAt,
+      ];
 }
 
 class BrailleTranslationFailure extends BrailleState {
@@ -34,7 +41,7 @@ class BrailleRecentsLoading extends BrailleState {
 }
 
 class BrailleRecentsSuccess extends BrailleState {
-  final List recents;
+  final List<TranslationModel> recents;
   BrailleRecentsSuccess({required this.recents});
 
   @override

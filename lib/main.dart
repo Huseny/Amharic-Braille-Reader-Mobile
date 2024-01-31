@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         home: const HomePage(),
         theme: ThemeData(
           useMaterial3: true,
-          fontFamily: "Jost",
+          fontFamily: "Proxima Nova",
         ),
         debugShowCheckedModeBanner: false,
       ),

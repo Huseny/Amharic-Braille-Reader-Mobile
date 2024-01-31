@@ -1,5 +1,6 @@
 import 'package:amharic_braille/application/braille_bloc/braille_events.dart';
 import 'package:amharic_braille/application/braille_bloc/braille_state.dart';
+import 'package:amharic_braille/application/models/translation_model.dart';
 import 'package:amharic_braille/repository/braille_repsoitory.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,7 +11,8 @@ class BrailleBloc extends Bloc<BrailleEvent, BrailleState> {
       if (state is BrailleTranslationLoading) return;
       emit(BrailleTranslationLoading());
       try {
-        final translation = await _brailleRepository.translateBraille(
+        final TranslationModel translation =
+            await _brailleRepository.translateBraille(
           event.imagePath,
         );
         emit(BrailleTranslationSuccess(translation: translation));
