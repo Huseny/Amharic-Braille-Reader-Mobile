@@ -106,8 +106,8 @@ class _ImageUploadState extends State<ImageUpload> {
                       ElevatedButton(
                           onPressed: () {
                             if (image != null) {
-                              BlocProvider.of<BrailleBloc>(context).add(
-                                  TranscribeBraille(imagePath: image!.path));
+                              BlocProvider.of<BrailleBloc>(context)
+                                  .add(TranscribeBraille(image: image!));
                             }
                           },
                           child: state.runtimeType == BrailleTranslationLoading

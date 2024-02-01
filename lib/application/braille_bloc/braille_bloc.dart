@@ -13,7 +13,7 @@ class BrailleBloc extends Bloc<BrailleEvent, BrailleState> {
       try {
         final TranslationModel translation =
             await _brailleRepository.translateBraille(
-          event.imagePath,
+          event.image,
         );
         emit(BrailleTranslationSuccess(translation: translation));
       } catch (e) {

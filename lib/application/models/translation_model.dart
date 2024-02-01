@@ -14,9 +14,19 @@ class TranslationModel {
       required this.translation,
       required this.createdAt});
 
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id.toString(),
+      'image': image,
+      'braille': braille,
+      'translation': translation,
+      'createdAt': createdAt.toIso8601String(),
+    };
+  }
+
   factory TranslationModel.fromJson(Map<String, dynamic> json) {
     return TranslationModel(
-      id: json['id'] ?? "",
+      id: (json['id'] ?? "").toString(),
       image: json['image'] ?? "",
       braille: json['braille'] ?? "",
       translation: json['translation'] ?? "",

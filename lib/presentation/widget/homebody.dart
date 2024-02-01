@@ -39,7 +39,7 @@ class _HomeBodyState extends State<HomeBody> {
         },
         child: _recentUploads.isEmpty
             ? state.runtimeType == BrailleRecentsLoading
-                ? const CircularProgressIndicator()
+                ? const Center(child: CircularProgressIndicator())
                 : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -52,16 +52,10 @@ class _HomeBodyState extends State<HomeBody> {
                             : "No recent uploads!, upload a photo to get started",
                         style: const TextStyle(color: Colors.grey),
                       ),
-                      ElevatedButton(
-                          onPressed: () {
-                            bloc.add(GetRecents());
-                          },
-                          child: Text(state.runtimeType == BrailleRecentsFailure
-                              ? "Retry"
-                              : "Refresh"))
                     ],
                   )
-            : ListView.builder(
+            : ListView.separated(
+                separatorBuilder: (context, index) => const Divider(),
                 itemCount: _recentUploads.length,
                 itemBuilder: (context, index) {
                   return RecentContainer(recent: _recentUploads[index]);

@@ -1,13 +1,15 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 
 abstract class BrailleEvent extends Equatable {}
 
 class TranscribeBraille extends BrailleEvent {
-  final String imagePath;
-  TranscribeBraille({required this.imagePath});
+  final File image;
+  TranscribeBraille({required this.image});
 
   @override
-  List<Object?> get props => [imagePath];
+  List<Object?> get props => [image];
 }
 
 class GetRecents extends BrailleEvent {
