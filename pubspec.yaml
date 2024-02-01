@@ -44,6 +44,7 @@ dependencies:
   convex_bottom_bar: ^3.2.0
   sqflite: ^2.3.2
   path: ^1.8.3
+  audioplayers: ^5.2.1
 
 dev_dependencies:
   flutter_test:

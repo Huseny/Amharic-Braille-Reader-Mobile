@@ -5,6 +5,7 @@ class TranslationModel {
   final Uint8List image;
   final String braille;
   final String translation;
+  final Uint8List audio;
   final DateTime createdAt;
 
   TranslationModel(
@@ -12,6 +13,7 @@ class TranslationModel {
       required this.image,
       required this.braille,
       required this.translation,
+      required this.audio,
       required this.createdAt});
 
   Map<String, dynamic> toMap() {
@@ -20,6 +22,7 @@ class TranslationModel {
       'image': image,
       'braille': braille,
       'translation': translation,
+      'audio': audio,
       'createdAt': createdAt.toIso8601String(),
     };
   }
@@ -30,6 +33,7 @@ class TranslationModel {
       image: json['image'] ?? "",
       braille: json['braille'] ?? "",
       translation: json['translation'] ?? "",
+      audio: json['audio'] ?? "",
       createdAt: DateTime.parse(json['createdAt'] ?? DateTime.now().toString()),
     );
   }

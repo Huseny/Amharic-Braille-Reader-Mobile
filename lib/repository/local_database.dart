@@ -17,6 +17,7 @@ class DatabaseHelper {
 
   Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'translations.db');
+    // deleteDatabase(path);
     return await openDatabase(path, version: 1, onCreate: _createTable);
   }
 
@@ -25,6 +26,7 @@ class DatabaseHelper {
       CREATE TABLE translations(
         id TEXT PRIMARY KEY,
         image BLOB,
+        audio BLOB,
         braille TEXT,
         translation TEXT,
         createdAt TEXT

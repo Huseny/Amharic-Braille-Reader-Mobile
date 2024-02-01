@@ -37,6 +37,7 @@ class BrailleRepository {
           "image": await image.readAsBytes(),
           "braille": (jsonResponse["braille"] as List).join("\n"),
           "translation": (jsonResponse["translation"] as List).join("\n"),
+          "audio": base64.decode(jsonResponse["audio"]),
           "createdAt": DateTime.now().toIso8601String()
         };
 

@@ -1,4 +1,5 @@
 import 'package:amharic_braille/application/models/translation_model.dart';
+import 'package:amharic_braille/repository/play_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class ShowTranslation extends StatefulWidget {
 class _ShowTranslationState extends State<ShowTranslation> {
   int currentTab = 0;
   bool isPlaying = false;
+  bool isPaused = false;
 
   @override
   Widget build(BuildContext context) {
@@ -50,28 +52,48 @@ class _ShowTranslationState extends State<ShowTranslation> {
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.blue.shade100,
                       ),
-                      child: ListTile(
-                        leading: Icon(
-                          isPlaying == true ? Icons.pause : Icons.play_arrow,
+                      child: Column(children: [
+                        IconButton(
+                          icon: Icon(
+                            isPlaying == true ? Icons.pause : Icons.play_arrow,
+                          ),
                           color: Colors.blue,
+                          onPressed: () async {
+                            debugPrint(
+                                widget.translationModel.audio.toString());
+                            isPlaying
+                                ? AudioController().pause()
+                                : isPaused
+                                    ? AudioController().resume()
+                                    : await AudioController().playAudio(
+                                        widget.translationModel.audio);
+                            setState(() {
+                              isPlaying = !isPlaying;
+                              isPaused = !isPaused;
+                            });
+                          },
                         ),
-                        title: Text(
-                          widget.translationModel.translation,
-                          maxLines: 1,
+                        Text(
+                          isPlaying == true
+                              ? "Playing..."
+                              : isPaused == true
+                                  ? "Paused"
+                                  : "Play Audio",
                           style: const TextStyle(
                               color: Colors.blue,
                               fontWeight: FontWeight.bold,
                               fontSize: 20),
                         ),
-                      ),
+                      ]),
                     )
                   : Container(
                       width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(horizontal: 5),
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
                       padding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
+                          border: Border.all(color: Colors.black),
                           color: currentTab == 0
                               ? Colors.grey
                               : Colors.grey.shade300),
