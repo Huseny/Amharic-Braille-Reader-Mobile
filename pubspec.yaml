@@ -44,7 +44,9 @@ dependencies:
   convex_bottom_bar: ^3.2.0
   sqflite: ^2.3.2
   path: ^1.8.3
+  path_provider: ^2.1.2
   audioplayers: ^5.2.1
+
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +73,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/img/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,5 +1,5 @@
 import 'package:amharic_braille/application/models/translation_model.dart';
-import 'package:amharic_braille/repository/play_audio.dart';
+import 'package:amharic_braille/presentation/widget/audio_tab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +13,6 @@ class ShowTranslation extends StatefulWidget {
 
 class _ShowTranslationState extends State<ShowTranslation> {
   int currentTab = 0;
-  bool isPlaying = false;
-  bool isPaused = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +25,7 @@ class _ShowTranslationState extends State<ShowTranslation> {
             children: [
               Container(
                   padding: const EdgeInsets.all(15),
-                  child: Image.memory(widget.translationModel.image)),
+                  child: Image.file(widget.translationModel.image)),
               CupertinoSegmentedControl(
                   borderColor: Colors.blue,
                   pressedColor: Colors.blueGrey,
@@ -45,46 +43,8 @@ class _ShowTranslationState extends State<ShowTranslation> {
                 height: 10,
               ),
               currentTab == 1
-                  ? Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.blue.shade100,
-                      ),
-                      child: Column(children: [
-                        IconButton(
-                          icon: Icon(
-                            isPlaying == true ? Icons.pause : Icons.play_arrow,
-                          ),
-                          color: Colors.blue,
-                          onPressed: () async {
-                            debugPrint(
-                                widget.translationModel.audio.toString());
-                            isPlaying
-                                ? AudioController().pause()
-                                : isPaused
-                                    ? AudioController().resume()
-                                    : await AudioController().playAudio(
-                                        widget.translationModel.audio);
-                            setState(() {
-                              isPlaying = !isPlaying;
-                              isPaused = !isPaused;
-                            });
-                          },
-                        ),
-                        Text(
-                          isPlaying == true
-                              ? "Playing..."
-                              : isPaused == true
-                                  ? "Paused"
-                                  : "Play Audio",
-                          style: const TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
-                      ]),
+                  ? AudioTab(
+                      audio: widget.translationModel.audio,
                     )
                   : Container(
                       width: MediaQuery.of(context).size.width,

@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:amharic_braille/application/models/translation_model.dart';
 import 'package:amharic_braille/repository/local_database.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 
 class BrailleRepository {
-  final String _url = 'http://192.168.43.108:8000';
+  final String _url = 'http://192.168.43.80:8000';
   DatabaseHelper dbHelper = DatabaseHelper.instance;
 
   Future<List<TranslationModel>> getRecents() async {
@@ -32,17 +34,22 @@ class BrailleRepository {
       if (response.statusCode == 200) {
         var responseBody = (await http.Response.fromStream(response)).body;
         final jsonResponse = json.decode(responseBody);
-        final Map<String, dynamic> jsonFinal = {
+        final imagePath = await _saveImage(image.readAsBytesSync());
+        final audioResponse = await http.post(
+          Uri.parse("$_url/get_audio/${jsonResponse["id"]}"),
+        );
+        final audioPath = await _saveAudio(audioResponse.bodyBytes);
+        final Map<String, dynamic> finalJson = {
           "id": jsonResponse["id"],
-          "image": await image.readAsBytes(),
+          "image": imagePath,
           "braille": (jsonResponse["braille"] as List).join("\n"),
           "translation": (jsonResponse["translation"] as List).join("\n"),
-          "audio": base64.decode(jsonResponse["audio"]),
+          "audio": audioPath,
           "createdAt": DateTime.now().toIso8601String()
         };
 
         final TranslationModel translation =
-            TranslationModel.fromJson(jsonFinal);
+            TranslationModel.fromJson(finalJson);
         _storeLocally(translation);
         return translation;
       } else {
@@ -53,6 +60,24 @@ class BrailleRepository {
       debugPrint('Exception: $e');
       rethrow;
     }
+  }
+
+  Future<String> _saveImage(Uint8List image) async {
+    String path =
+        join(await dbHelper.getPath, 'brailles', "${DateTime.now()}.jpg");
+    File fileDef = File(path);
+    await fileDef.create(recursive: true);
+    File img = await fileDef.writeAsBytes(image);
+    return img.path;
+  }
+
+  Future<String> _saveAudio(Uint8List audio) async {
+    String path =
+        join(await dbHelper.getPath, 'audios', "${DateTime.now()}.mp3");
+    File fileDef = File(path);
+    await fileDef.create(recursive: true);
+    File audi = await fileDef.writeAsBytes(audio);
+    return audi.path;
   }
 
   Future<int> _storeLocally(TranslationModel translationModel) async {

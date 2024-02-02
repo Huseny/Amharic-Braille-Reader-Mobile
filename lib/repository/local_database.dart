@@ -25,8 +25,8 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE translations(
         id TEXT PRIMARY KEY,
-        image BLOB,
-        audio BLOB,
+        image TEXT,
+        audio TEXT,
         braille TEXT,
         translation TEXT,
         createdAt TEXT
@@ -36,7 +36,9 @@ class DatabaseHelper {
 
   Future<int> insertTranslation(TranslationModel translation) async {
     Database db = await database;
-    return await db.insert('translations', translation.toMap());
+
+    return await db.insert('translations', translation.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   Future<List<TranslationModel>> getAllTranslations() async {
@@ -46,4 +48,11 @@ class DatabaseHelper {
       return TranslationModel.fromJson(maps[index]);
     });
   }
+
+  Future<void> deleteTranslation(String id) async {
+    Database db = await database;
+    await db.delete('translations', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<String> get getPath async => await getDatabasesPath();
 }
